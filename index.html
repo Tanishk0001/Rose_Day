@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Day</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background: #0a0a0a;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Shayari */
+        .shayari {
+            font-family: 'Noto Nastaliq Urdu', 'Noto Sans Devanagari', serif;
+            font-size: 1.8rem;
+            color: #e8d5c4;
+            line-height: 2.2;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 4s ease-out 1s forwards;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Rose Container */
+        .rose-wrapper {
+            position: relative;
+            width: 400px;
+            height: 450px;
+            margin: 0 auto;
+        }
+
+        /* Stem */
+        .stem {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 0;
+            background: linear-gradient(90deg, #1e3a1e, #2d5a2d, #1e3a1e);
+            border-radius: 6px;
+            animation: growStem 3s ease-out 12s forwards;
+        }
+
+        @keyframes growStem {
+            to { height: 220px; }
+        }
+
+        /* Leaves */
+        .leaf {
+            position: absolute;
+            width: 70px;
+            height: 35px;
+            background: linear-gradient(135deg, #3d7a3d, #1e3a1e);
+            border-radius: 0 100% 0 100%;
+            opacity: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .leaf.left {
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg) scale(0);
+            transform-origin: right center;
+            animation: leafGrow 2s ease-out 14s forwards;
+        }
+
+        .leaf.right {
+            bottom: 180px;
+            left: 50%;
+            transform: translateX(-50%) rotate(135deg) scale(0);
+            transform-origin: left center;
+            animation: leafGrow 2s ease-out 14.5s forwards;
+        }
+
+        @keyframes leafGrow {
+            to { opacity: 1; transform: translateX(-50%) rotate(-45deg) scale(1); }
+        }
+
+        /* Sepals */
+        .sepal {
+            position: absolute;
+            bottom: 210px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 40px solid #2d5a2d;
+            opacity: 0;
+            transform-origin: top center;
+        }
+
+        .sepal.s1 {
+            transform: translateX(-50%) rotate(-30deg) scale(0);
+            animation: sepalGrow 1.5s ease-out 13s forwards;
+        }
+
+        .sepal.s2 {
+            transform: translateX(-50%) rotate(30deg) scale(0);
+            animation: sepalGrow 1.5s ease-out 13.2s forwards;
+        }
+
+        .sepal.s3 {
+            transform: translateX(-50%) rotate(90deg) scale(0);
+            animation: sepalGrow 1.5s ease-out 13.4s forwards;
+        }
+
+        @keyframes sepalGrow {
+            to { opacity: 1; transform: translateX(-50%) rotate(var(--r, 0deg)) scale(1); }
+        }
+
+        /* Rose Head */
+        .rose {
+            position: absolute;
+            bottom: 230px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 280px;
+            opacity: 0;
+            animation: showRose 1s ease-out 15s forwards;
+        }
+
+        @keyframes showRose {
+            to { opacity: 1; }
+        }
+
+        /* Petal Base */
+        .petal {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: center bottom;
+            border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+            box-shadow: 
+                inset 0 -10px 20px rgba(0,0,0,0.3),
+                inset 0 10px 20px rgba(255,255,255,0.1),
+                0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+        }
+
+        /* Petal highlight */
+        .petal::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 20%;
+            width: 30%;
+            height: 40%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4), transparent);
+            border-radius: 50%;
+            filter: blur(3px);
+        }
+
+        /* Dew drop */
+        .petal::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 8px;
+            background: radial-gradient(ellipse at 30% 30%, white 0%, rgba(255,255,255,0.3) 70%);
+            border-radius: 50%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* OUTER PETALS - Large, cupping shape */
+        .petal.o1 {
+            width: 140px;
+            height: 170px;
+            background: linear-gradient(180deg, #c41e3a 0%, #8b0a1a 50%, #4a0008 100%);
+            margin-left: -70px;
+            margin-bottom: -20px;
+            transform: rotate(-72deg) scale(0);
+            animation: bloom1 4s ease-out 15s forwards;
+            z-index: 1;
+        }
+        .petal.o1::after { top: 20%; right: 20%; }
+
+        .petal.o2 {
+            width: 145px;
+            height: 175px;
+            background: linear-gradient(180deg, #c41e3a 0%, #8b0a1a 50%, #4a0008 100%);
+            margin-left: -72px;
+            margin-bottom: -20px;
+            transform: rotate(0deg) scale(0);
+            animation: bloom2 4s ease-out 15.2s forwards;
+            z-index: 2;
+        }
+        .petal.o2::after { top: 15%; left: 30%; }
+
+        .petal.o3 {
+            width: 140px;
+            height: 170px;
+            background: linear-gradient(180deg, #c41e3a 0%, #8b0a1a 50%, #4a0008 100%);
+            margin-left: -70px;
+            margin-bottom: -20px;
+            transform: rotate(72deg) scale(0);
+            animation: bloom3 4s ease-out 15.4s forwards;
+            z-index: 3;
+        }
+        .petal.o3::after { top: 25%; right: 25%; }
+
+        .petal.o4 {
+            width: 135px;
+            height: 165px;
+            background: linear-gradient(180deg, #c41e3a 0%, #8b0a1a 50%, #4a0008 100%);
+            margin-left: -67px;
+            margin-bottom: -20px;
+            transform: rotate(144deg) scale(0);
+            animation: bloom4 4s ease-out 15.6s forwards;
+            z-index: 4;
+        }
+        .petal.o4::after { top: 30%; left: 20%; }
+
+        .petal.o5 {
+            width: 135px;
+            height: 165px;
+            background: linear-gradient(180deg, #c41e3a 0%, #8b0a1a 50%, #4a0008 100%);
+            margin-left: -67px;
+            margin-bottom: -20px;
+            transform: rotate(-144deg) scale(0);
+            animation: bloom5 4s ease-out 15.8s forwards;
+            z-index: 5;
+        }
+        .petal.o5::after { top: 22%; right: 30%; }
+
+        /* MIDDLE PETALS */
+        .petal.m1 {
+            width: 110px;
+            height: 140px;
+            background: linear-gradient(180deg, #dc143c 0%, #a01030 50%, #600018 100%);
+            margin-left: -55px;
+            margin-bottom: -10px;
+            transform: rotate(-36deg) scale(0);
+            animation: bloom6 4s ease-out 16s forwards;
+            z-index: 6;
+        }
+        .petal.m1::after { top: 35%; right: 25%; }
+
+        .petal.m2 {
+            width: 115px;
+            height: 145px;
+            background: linear-gradient(180deg, #dc143c 0%, #a01030 50%, #600018 100%);
+            margin-left: -57px;
+            margin-bottom: -10px;
+            transform: rotate(36deg) scale(0);
+            animation: bloom7 4s ease-out 16.2s forwards;
+            z-index: 7;
+        }
+        .petal.m2::after { top: 40%; left: 25%; }
+
+        .petal.m3 {
+            width: 110px;
+            height: 140px;
+            background: linear-gradient(180deg, #dc143c 0%, #a01030 50%, #600018 100%);
+            margin-left: -55px;
+            margin-bottom: -10px;
+            transform: rotate(108deg) scale(0);
+            animation: bloom8 4s ease-out 16.4s forwards;
+            z-index: 8;
+        }
+        .petal.m3::after { top: 30%; right: 20%; }
+
+        .petal.m4 {
+            width: 110px;
+            height: 140px;
+            background: linear-gradient(180deg, #dc143c 0%, #a01030 50%, #600018 100%);
+            margin-left: -55px;
+            margin-bottom: -10px;
+            transform: rotate(-108deg) scale(0);
+            animation: bloom9 4s ease-out 16.6s forwards;
+            z-index: 9;
+        }
+        .petal.m4::after { top: 45%; left: 30%; }
+
+        /* INNER PETALS */
+        .petal.i1 {
+            width: 85px;
+            height: 110px;
+            background: linear-gradient(180deg, #e31837 0%, #b01028 50%, #700018 100%);
+            margin-left: -42px;
+            margin-bottom: 0;
+            transform: rotate(0deg) scale(0);
+            animation: bloom10 4s ease-out 16.8s forwards;
+            z-index: 10;
+        }
+        .petal.i1::after { top: 50%; right: 30%; width: 5px; height: 6px; }
+
+        .petal.i2 {
+            width: 80px;
+            height: 105px;
+            background: linear-gradient(180deg, #e31837 0%, #b01028 50%, #700018 100%);
+            margin-left: -40px;
+            margin-bottom: 0;
+            transform: rotate(72deg) scale(0);
+            animation: bloom11 4s ease-out 17s forwards;
+            z-index: 11;
+        }
+        .petal.i2::after { top: 55%; left: 25%; width: 4px; height: 5px; }
+
+        .petal.i3 {
+            width: 80px;
+            height: 105px;
+            background: linear-gradient(180deg, #e31837 0%, #b01028 50%, #700018 100%);
+            margin-left: -40px;
+            margin-bottom: 0;
+            transform: rotate(-72deg) scale(0);
+            animation: bloom12 4s ease-out 17.2s forwards;
+            z-index: 12;
+        }
+        .petal.i3::after { top: 48%; right: 35%; width: 5px; height: 6px; }
+
+        /* CENTER BUD */
+        .petal.c1 {
+            width: 55px;
+            height: 75px;
+            background: linear-gradient(180deg, #ff1744 0%, #d01030 50%, #900020 100%);
+            margin-left: -27px;
+            margin-bottom: 5px;
+            transform: rotate(36deg) scale(0);
+            animation: bloom13 4s ease-out 17.4s forwards;
+            z-index: 13;
+        }
+
+        .petal.c2 {
+            width: 50px;
+            height: 70px;
+            background: linear-gradient(180deg, #ff1744 0%, #d01030 50%, #900020 100%);
+            margin-left: -25px;
+            margin-bottom: 5px;
+            transform: rotate(-36deg) scale(0);
+            animation: bloom14 4s ease-out 17.6s forwards;
+            z-index: 14;
+        }
+
+        /* Bloom Animations - Natural opening */
+        @keyframes bloom1 {
+            0% { transform: rotate(-72deg) scale(0); opacity: 0; }
+            100% { transform: rotate(-80deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom2 {
+            0% { transform: rotate(0deg) scale(0); opacity: 0; }
+            100% { transform: rotate(-5deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom3 {
+            0% { transform: rotate(72deg) scale(0); opacity: 0; }
+            100% { transform: rotate(75deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom4 {
+            0% { transform: rotate(144deg) scale(0); opacity: 0; }
+            100% { transform: rotate(150deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom5 {
+            0% { transform: rotate(-144deg) scale(0); opacity: 0; }
+            100% { transform: rotate(-150deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom6 {
+            0% { transform: rotate(-36deg) scale(0); opacity: 0; }
+            100% { transform: rotate(-40deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom7 {
+            0% { transform: rotate(36deg) scale(0); opacity: 0; }
+            100% { transform: rotate(40deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom8 {
+            0% { transform: rotate(108deg) scale(0); opacity: 0; }
+            100% { transform: rotate(112deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom9 {
+            0% { transform: rotate(-108deg) scale(0); opacity: 0; }
+            100% { transform: rotate(-112deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom10 {
+            0% { transform: rotate(0deg) scale(0); opacity: 0; }
+            100% { transform: rotate(3deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom11 {
+            0% { transform: rotate(72deg) scale(0); opacity: 0; }
+            100% { transform: rotate(75deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom12 {
+            0% { transform: rotate(-72deg) scale(0); opacity: 0; }
+            100% { transform: rotate(-75deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom13 {
+            0% { transform: rotate(36deg) scale(0); opacity: 0; }
+            100% { transform: rotate(38deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes bloom14 {
+            0% { transform: rotate(-36deg) scale(0); opacity: 0; }
+            100% { transform: rotate(-38deg) scale(1); opacity: 1; }
+        }
+
+        /* Message */
+        .message {
+            margin-top: 30px;
+            font-size: 2rem;
+            color: #e8d5c4;
+            letter-spacing: 3px;
+            opacity: 0;
+            animation: fadeIn 3s ease-out 22s forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .shayari { font-size: 1.4rem; }
+            .rose-wrapper { transform: scale(0.75); }
+            .message { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="shayari">
+            लोग बचते हैं समुंदर से<br>
+और हम तुम्हारी आँखों में डूबने को तैयार हैं।<br>
+
+किसे देखने की चाहत करें…? <br>
+तुम्हें एक बार देख लिया, बस वही काफ़ी है।<br>
+
+तुम्हारी ज़ुल्फ़ों की गहराई बहुत है,<br>
+और हमें किनारा कभी पसंद नहीं आया।<br>
+
+लोग कहते हैं तुम चाँद का टुकड़ा हो,<br>
+हम कहते हैं—चाँद टुकड़ा है तुम्हारा…!! <br>
+        </div>
+
+        <div class="rose-wrapper">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            
+            <div class="sepal s1" style="--r: -30deg;"></div>
+            <div class="sepal s2" style="--r: 30deg;"></div>
+            <div class="sepal s3" style="--r: 90deg;"></div>
+
+            <div class="rose">
+                <!-- 5 Outer -->
+                <div class="petal o1"></div>
+                <div class="petal o2"></div>
+                <div class="petal o3"></div>
+                <div class="petal o4"></div>
+                <div class="petal o5"></div>
+                
+                <!-- 4 Middle -->
+                <div class="petal m1"></div>
+                <div class="petal m2"></div>
+                <div class="petal m3"></div>
+                <div class="petal m4"></div>
+                
+                <!-- 3 Inner -->
+                <div class="petal i1"></div>
+                <div class="petal i2"></div>
+                <div class="petal i3"></div>
+                
+                <!-- 2 Center -->
+                <div class="petal c1"></div>
+                <div class="petal c2"></div>
+            </div>
+        </div>
+
+        <div class="message">Happy Rose Day</div>
+    </div>
+</body>
+</html>
